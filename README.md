@@ -1,6 +1,6 @@
 # SocialCRON-CORE
 
-Arduino weather logger project REST web service
+SocialCRON is a open-source platform to schedule post on social media sites
 
 ## Summary
 * 1 Build
