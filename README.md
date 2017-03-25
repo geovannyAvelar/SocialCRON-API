@@ -1,6 +1,7 @@
 # SocialCRON-CORE
+[![Build Status](https://travis-ci.org/geovannyAvelar/SocialCRON-CORE.svg?branch=master)](https://travis-ci.org/geovannyAvelar/SocialCRON-CORE) [![Code Climate](https://codeclimate.com/github/geovannyAvelar/SocialCRON-CORE/badges/gpa.svg)](https://codeclimate.com/github/geovannyAvelar/SocialCRON-CORE)
 
-SocialCRON is a open-source platform to schedule post on social media sites
+SocialCRON is an open-source platform to schedule posts on social media sites
 
 ## Summary
 * 1 Build
