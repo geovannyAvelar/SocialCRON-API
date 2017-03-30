@@ -2,6 +2,9 @@
 package br.com.agenciacodeplus.socialcron;
 
 import javax.sql.DataSource;
+import br.com.agenciacodeplus.socialcron.security.Authorities;
+import br.com.agenciacodeplus.socialcron.security.CustomAuthenticationEntryPoint;
+import br.com.agenciacodeplus.socialcron.security.CustomLogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
@@ -22,10 +25,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import br.com.agenciacodeplus.socialcron.security.Authorities;
-import br.com.agenciacodeplus.socialcron.security.CustomAuthenticationEntryPoint;
-import br.com.agenciacodeplus.socialcron.security.CustomLogoutSuccessHandler;
 
 @Configuration
 public class OAuth2Configuration {

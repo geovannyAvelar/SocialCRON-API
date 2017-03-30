@@ -54,7 +54,7 @@ public class ACLConfiguration {
 
   @Bean
   public AclCache aclCache(Ehcache ehCache, PermissionGrantingStrategy grantingStrategy,
-      AclAuthorizationStrategy aclAuthorizationStrategy) {
+                                            AclAuthorizationStrategy aclAuthorizationStrategy) {
     AclCache aclCache =
         new EhCacheBasedAclCache(ehCache, grantingStrategy, aclAuthorizationStrategy);
 
@@ -63,7 +63,7 @@ public class ACLConfiguration {
 
   @Bean
   public BasicLookupStrategy basicLookupStrategy(AclCache aclCache,
-      AclAuthorizationStrategy aclAuthorizationStrategy,
+                                                 AclAuthorizationStrategy aclAuthorizationStrategy,
       PermissionGrantingStrategy grantingStrategy) {
 
     return new BasicLookupStrategy(dataSource, aclCache, aclAuthorizationStrategy,
@@ -81,7 +81,7 @@ public class ACLConfiguration {
 
   @Bean
   public MethodSecurityExpressionHandler expressionHandler(
-      PermissionEvaluator permissionEvaluator) {
+                                                        PermissionEvaluator permissionEvaluator) {
     DefaultMethodSecurityExpressionHandler handler = new DefaultMethodSecurityExpressionHandler();
     handler.setPermissionEvaluator(permissionEvaluator);
     return handler;

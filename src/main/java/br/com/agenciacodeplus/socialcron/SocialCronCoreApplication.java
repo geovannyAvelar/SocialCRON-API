@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SocialCronCoreApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SocialCronCoreApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(SocialCronCoreApplication.class, args);
+  }
+  
 }
