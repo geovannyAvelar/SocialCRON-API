@@ -15,8 +15,11 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "posts")
@@ -32,6 +35,8 @@ public class Post {
   @Column(name = "date")
   @NotNull
   @Future
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mmZ")
   private Date date;
   
   @Column(name = "completed")
