@@ -2,8 +2,10 @@ package br.com.agenciacodeplus.socialcron.controllers;
 
 import br.com.agenciacodeplus.socialcron.posts.Post;
 import br.com.agenciacodeplus.socialcron.posts.PostsService;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,6 +38,22 @@ public class PostsController {
     }
     
     return new ResponseEntity<Post>(post, HttpStatus.OK);
+    
+  }
+  
+  @CrossOrigin
+  @RequestMapping(value = "/day/{day}", method = RequestMethod.GET)
+  @PreAuthorize("hasAuthority('ADMIN')")
+  public @ResponseBody ResponseEntity<List<Post>> findByPeriod(@PathVariable 
+                                                               @DateTimeFormat(pattern="yyyy-MM-dd")
+                                                                Date day) {
+    List<Post> posts = service.findByDay(day);
+    
+    if(posts.isEmpty()) {
+      return new ResponseEntity<List<Post>>(HttpStatus.NOT_FOUND);
+    }
+    
+    return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
     
   }
   

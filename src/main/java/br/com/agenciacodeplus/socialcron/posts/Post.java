@@ -1,9 +1,7 @@
 package br.com.agenciacodeplus.socialcron.posts;
 
-import br.com.agenciacodeplus.socialcron.drafts.Draft;
-import br.com.agenciacodeplus.socialcron.events.Event;
-import br.com.agenciacodeplus.socialcron.profiles.Profile;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,6 +19,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.agenciacodeplus.socialcron.drafts.Draft;
+import br.com.agenciacodeplus.socialcron.events.Event;
+import br.com.agenciacodeplus.socialcron.profiles.Profile;
 
 @Entity
 @Table(name = "posts")
@@ -55,6 +59,7 @@ public class Post {
   @NotNull
   @ManyToOne
   @JoinColumn(name = "event_id")
+  @JsonIgnore
   private Event event;
 
   public Long getId() {
