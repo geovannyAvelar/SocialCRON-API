@@ -1,5 +1,7 @@
 package br.com.agenciacodeplus.socialcron.controllers;
 
+import java.util.List;
+
 import br.com.agenciacodeplus.socialcron.acl.ACLPermissions;
 import br.com.agenciacodeplus.socialcron.events.Event;
 import br.com.agenciacodeplus.socialcron.events.EventsService;
@@ -7,12 +9,12 @@ import br.com.agenciacodeplus.socialcron.events.EventsValidator;
 import br.com.agenciacodeplus.socialcron.helpers.HttpHeadersHelper;
 import br.com.agenciacodeplus.socialcron.posts.Post;
 import br.com.agenciacodeplus.socialcron.posts.PostsService;
-import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.Errors;
@@ -97,6 +99,13 @@ public class EventsController {
     }
     
     return new ResponseEntity<Event>(event, HttpStatus.OK);
+  }
+  
+  @CrossOrigin
+  @RequestMapping(value = "/all", method = RequestMethod.GET)
+  @PostFilter("hasPermission(filterObject, 'read')")
+  public @ResponseBody List<Event> findAll() {
+    return service.findAll();
   }
   
   @CrossOrigin
