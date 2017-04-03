@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,31 +44,17 @@ public class PostsController {
   
   @CrossOrigin
   @RequestMapping(value = "/day/{day}", method = RequestMethod.GET)
-  @PreAuthorize("hasAuthority('ADMIN')")
-  public @ResponseBody ResponseEntity<List<Post>> findByPeriod(@PathVariable 
-                                                               @DateTimeFormat(pattern="yyyy-MM-dd")
-                                                                Date day) {
-    List<Post> posts = service.findByDay(day);
-    
-    if(posts.isEmpty()) {
-      return new ResponseEntity<List<Post>>(HttpStatus.NOT_FOUND);
-    }
-    
-    return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
-    
+  @PostFilter("hasAuthority('ADMIN') or hasPermission(filterObject, 'read')")
+  public @ResponseBody List<Post> findByPeriod(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd")
+                                                Date day) {
+    return service.findByDay(day);
   }
   
   @CrossOrigin
   @RequestMapping(value = "/all", method = RequestMethod.GET)
-  @PreAuthorize("hasAuthority('ADMIN')")
-  public @ResponseBody ResponseEntity<List<Post>> findAll() {
-    List<Post> posts = service.findAll();
-    
-    if(posts.isEmpty()) {
-      return new ResponseEntity<List<Post>>(HttpStatus.NOT_FOUND);
-    }
-    
-    return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
+  @PostFilter("hasAuthority('ADMIN') or hasPermission(filterObject, 'read')")
+  public @ResponseBody List<Post> findAll() {   
+    return service.findAll(); 
   }
   
 }
