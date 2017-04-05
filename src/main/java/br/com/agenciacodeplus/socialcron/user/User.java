@@ -11,13 +11,19 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.agenciacodeplus.socialcron.authority.Authority;
 
 @Entity
-@Component
 @Table(name = "USER")
+@Component
+@Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class User {
 
   @Id
@@ -31,6 +37,7 @@ public class User {
 
   @Column(name = "PASSWORD")
   @Size(min = 0, max = 500)
+  @JsonIgnore
   private String password;
 
   @Column(name = "NAME")
@@ -39,14 +46,17 @@ public class User {
   private String name;
 
   @Column(name = "ACTIVATED")
+  @JsonIgnore
   private boolean activated;
 
   @Column(name = "ACTIVATIONKEY")
   @Size(min = 0, max = 100)
+  @JsonIgnore
   private String activationKey;
 
   @Column(name = "RESETPASSWORDKEY")
   @Size(min = 0, max = 100)
+  @JsonIgnore
   private String resetPasswordKey;
 
   @ManyToMany

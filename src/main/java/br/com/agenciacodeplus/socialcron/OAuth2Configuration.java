@@ -63,8 +63,9 @@ public class OAuth2Configuration {
          .and()
            .authorizeRequests()
            .anyRequest().authenticated()
+           .antMatchers(HttpMethod.GET, "/v1/posts/day/2014-11-18").anonymous()
            .antMatchers(HttpMethod.OPTIONS, "/**").permitAll();
-
+           
     }
 
   }

@@ -40,8 +40,6 @@ public class UserDetailsService
       userFromDatabase = userRepository.findByUsernameCaseInsensitive(lowercaseLogin);
     }
 
-    userFromDatabase = userRepository.findByEmail(lowercaseLogin);
-
     if (userFromDatabase == null) {
       throw new UsernameNotFoundException(
           "User " + lowercaseLogin + " was not found in the database");
