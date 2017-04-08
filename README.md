@@ -1,5 +1,5 @@
 # SocialCRON-CORE
-[![Build Status](https://travis-ci.org/geovannyAvelar/SocialCRON-CORE.svg?branch=master)](https://travis-ci.org/geovannyAvelar/SocialCRON-CORE) [![Code Climate](https://codeclimate.com/github/geovannyAvelar/SocialCRON-CORE/badges/gpa.svg)](https://codeclimate.com/github/geovannyAvelar/SocialCRON-CORE)
+[![Build Status](https://travis-ci.org/geovannyAvelar/SocialCRON-CORE.svg?branch=master)](https://travis-ci.org/geovannyAvelar/SocialCRON-CORE) [![Code Climate](https://codeclimate.com/github/geovannyAvelar/SocialCRON-CORE/badges/gpa.svg)](https://codeclimate.com/github/geovannyAvelar/SocialCRON-CORE) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
 SocialCRON is an open-source platform to schedule posts on social media sites
 
@@ -9,6 +9,7 @@ SocialCRON is an open-source platform to schedule posts on social media sites
     * 1.2 Before build
         * 1.2.1 JDK version
         * 1.2.2 Database
+        * 1.2.3 Facebook
     * 1.3 Build
 * 2 License
 
@@ -30,6 +31,9 @@ This project use MySQL as relational database management system. You can obtain 
 
 To configure the connection of SocialCRON with your MySQL database, open the file **src/main/resources/application.properties** and fill the properties with your username, password and database URL. The application can generate the database tables automatically, just set the property **spring.jpa.hibernate.ddl-auto** to **update**, don't use this in production.
 
+#### 1.2.3 Facebook
+To use SocialCRON, you will need a Facebook app to connect to Facebook API. You can create one accessing [Facebook Developers page](https://developers.facebook.com/). After create your app, fill the properties of file **src/main/resources/facebook4j.properties** with the id and the secret of your Facebook application.
+
 ### 1.3 Build
 
 1. Get the source typing the command:
@@ -45,3 +49,5 @@ To configure the connection of SocialCRON with your MySQL database, open the fil
 
 ## 2 License
 This project is under The MIT License (MIT) terms.
+
+![CODE Plus](https://i1.wp.com/www.agenciacodeplus.com.br/wp-content/uploads/2017/03/cropped-logoOficial-1.png?w=200)
