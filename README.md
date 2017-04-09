@@ -45,7 +45,7 @@ To use SocialCRON, you will need a Facebook app to connect to Facebook API. You 
 3. With Maven, compile and package with:
 **mvn install -DskipTests**
 
-4. The depedencies will be resolved and a file named socialcron-CORE-X.war will be generated on target directory, 'X' is the version name. Now you should deploy this .war file on a application server, like Tomcat.
+4. The depedencies will be resolved and a file named socialcron-CORE-X.war will be generated on target directory, 'X' is the version name. Now you should deploy this .war file on an application server.
 
 ## 2 License
 This project is under The MIT License (MIT) terms.
