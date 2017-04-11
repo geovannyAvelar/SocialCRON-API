@@ -68,8 +68,8 @@ public class PostsController {
         + "man's death diminishes me, because I am involved in mankind, and therefore never send to"
         + " know for whom the bells tolls; it tolls for thee. (Devotions Upon Emergent Occasions, "
         + "'Meditation XVII', John Donne). "
-        + "\n In memorian Sérgio Carneiro (24-12-1953 ~ 24-11-2014)");
-    
+        + "\n In memoriam Sérgio Carneiro (24-12-1953 ~ 18-11-2014)");
+   
     Event event = new Event();
     event.setId(0l);
     
