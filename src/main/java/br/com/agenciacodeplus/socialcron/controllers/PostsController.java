@@ -2,6 +2,8 @@ package br.com.agenciacodeplus.socialcron.controllers;
 
 import br.com.agenciacodeplus.socialcron.drafts.Draft;
 import br.com.agenciacodeplus.socialcron.events.Event;
+import br.com.agenciacodeplus.socialcron.events.EventsService;
+import br.com.agenciacodeplus.socialcron.exceptions.ResourceNotFoundException;
 import br.com.agenciacodeplus.socialcron.periods.Period;
 import br.com.agenciacodeplus.socialcron.posts.Post;
 import br.com.agenciacodeplus.socialcron.posts.PostsService;
@@ -29,9 +31,12 @@ public class PostsController {
 
   private PostsService service;
   
+  private EventsService eventsService;
+  
   @Autowired
-  public PostsController(PostsService service) {
+  public PostsController(PostsService service, EventsService eventsService) {
     this.service = service;
+    this.eventsService = eventsService;
   }
   
   @CrossOrigin
@@ -99,6 +104,21 @@ public class PostsController {
     post.setProfile(profile);
     
     return post;
+  }
+  
+  @CrossOrigin
+  @RequestMapping(value = "/event/{id}", method = RequestMethod.GET)
+  @PostFilter("hasPermission(#id, 'br.com.agenciacodeplus.socialcron.events.Event', 'read')"
+            + " and hasPermission(filterObject, 'read')")
+  public @ResponseBody List<Post> findByEvent(@PathVariable Long id) 
+                                                           throws ResourceNotFoundException {
+    Event event = eventsService.findOne(id);
+    
+    if(event == null) {
+      throw new ResourceNotFoundException();
+    }
+    
+    return service.findByEvent(event);
   }
   
   @CrossOrigin
