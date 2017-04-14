@@ -7,7 +7,7 @@
 
 	<groupId>br.com.agenciacodeplus</groupId>
 	<artifactId>socialcron</artifactId>
-	<version>1.6.6</version>
+	<version>1.7.6</version>
 	<packaging>war</packaging>
 
 	<name>SocialCRON-CORE</name>

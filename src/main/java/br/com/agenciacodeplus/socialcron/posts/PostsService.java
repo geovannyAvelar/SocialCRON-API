@@ -1,5 +1,6 @@
 package br.com.agenciacodeplus.socialcron.posts;
 
+import br.com.agenciacodeplus.socialcron.drafts.Draft;
 import br.com.agenciacodeplus.socialcron.events.Event;
 import br.com.agenciacodeplus.socialcron.utils.DateUtils;
 import java.util.Calendar;
@@ -37,6 +38,10 @@ public class PostsService {
   
   public List<Post> findByEvent(Event event) {
     return dao.findByEvent(event);
+  }
+  
+  public List<Post> findByDraft(Draft draft) {
+    return dao.findByDraft(draft);
   }
   
   public List<Post> findAll() {
