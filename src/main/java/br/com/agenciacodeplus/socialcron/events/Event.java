@@ -165,6 +165,16 @@ public class Event {
     
   }
  
+  public boolean equals(Object object) {
+    if(!object.getClass().equals(Event.class)) return false;
+    
+    Event event = (Event) object;
+    
+    if(event.getId() == null) return false;
+    
+    return event.getId().equals(this.id);
+  }
+  
   private Post createPost(Date date) {
     Post post = new Post();
     post.setDate(date);

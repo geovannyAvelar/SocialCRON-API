@@ -57,4 +57,14 @@ public class Draft {
     this.content = content;
   }
   
+  public boolean equals(Object object) {
+    if(!object.getClass().equals(Draft.class)) return false;
+    
+    Draft draft = (Draft) object;
+    
+    if(draft.getId() == null) return false;
+    
+    return draft.getId().equals(this.id);
+  }
+  
 }

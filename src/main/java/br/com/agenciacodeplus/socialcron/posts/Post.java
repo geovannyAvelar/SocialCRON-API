@@ -4,7 +4,6 @@ import br.com.agenciacodeplus.socialcron.drafts.Draft;
 import br.com.agenciacodeplus.socialcron.events.Event;
 import br.com.agenciacodeplus.socialcron.profiles.Profile;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,7 +54,6 @@ public class Post {
   @ManyToOne
   @NotNull
   @JoinColumn(name = "event_id")
-  @JsonIgnore
   private Event event;
 
   public Long getId() {
@@ -104,6 +102,16 @@ public class Post {
 
   public void setEvent(Event event) {
     this.event = event;
+  }
+  
+  public boolean equals(Object object) {
+    if(!object.getClass().equals(Post.class)) return false;
+    
+    Post post = (Post) object;
+    
+    if(post.getId() == null) return false;
+    
+    return post.getId().equals(this.id);
   }
   
 }
