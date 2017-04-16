@@ -7,7 +7,7 @@
 
 	<groupId>br.com.agenciacodeplus</groupId>
 	<artifactId>socialcron</artifactId>
-	<version>1.7.6</version>
+	<version>1.7.7</version>
 	<packaging>war</packaging>
 
 	<name>SocialCRON-CORE</name>
@@ -25,7 +25,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<java.version>1.7</java.version>
 	</properties>
 
 	<dependencies>
