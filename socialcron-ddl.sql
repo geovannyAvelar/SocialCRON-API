@@ -17,9 +17,9 @@ create table if not exists posts (
   draft_id bigint(20) not null,
   profile_id bigint(20) not null,
   event_id bigint(20) not null,
-  foreign key (draft_id) references drafts(id),
+  foreign key (draft_id) references drafts(id) on delete cascade,
   foreign key (profile_id) references profiles(id),
-  foreign key (event_id) references events(id)
+  foreign key (event_id) references events(id) on delete cascade
 );
 
 create table if not exists events (
