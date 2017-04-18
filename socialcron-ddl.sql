@@ -10,6 +10,14 @@ create table if not exists profiles (
   token varchar(256) not null
 );
 
+create table if not exists events (
+  id bigint(20) primary key auto_increment,
+  initial_date datetime not null,
+  limit_date date,
+  period int,
+  time_interval int
+);
+
 create table if not exists posts (
   id bigint(20) primary key auto_increment,
   date datetime not null,
@@ -20,14 +28,6 @@ create table if not exists posts (
   foreign key (draft_id) references drafts(id) on delete cascade,
   foreign key (profile_id) references profiles(id),
   foreign key (event_id) references events(id) on delete cascade
-);
-
-create table if not exists events (
-  id bigint(20) primary key auto_increment,
-  initial_date datetime not null,
-  limit_date date,
-  period int,
-  time_interval int
 );
 
 create table if not exists user (
