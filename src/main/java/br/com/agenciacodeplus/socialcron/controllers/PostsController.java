@@ -96,7 +96,7 @@ public class PostsController {
     event.setDraft(draft);
     
     Profile profile = new Profile();
-    profile.setId(0l);
+    profile.setId("0");
     profile.setName("Sérgio Carneiro");
     profile.setToken("YW5kIHRoZSBkdXN0IHJldHVybnMgdG8gdGhlIGdyb3VuZCBpdCBjYW1lIGZyb20sIGFuZCB0aGUg"
                     + "c3Bpcml0IHJldHVybnMgdG8gR29kIHdobyBnYXZlIGl0Lg==");

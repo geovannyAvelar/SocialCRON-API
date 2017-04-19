@@ -2,7 +2,6 @@ package br.com.agenciacodeplus.socialcron.profiles;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -20,9 +19,8 @@ import org.springframework.web.context.WebApplicationContext;
 public class Profile {
   
   @Id
-  @GeneratedValue
   @Column(name = "id")
-  private Long id;
+  private String id;
   
   @Column(name = "name")
   @NotNull
@@ -35,11 +33,11 @@ public class Profile {
   @NotEmpty
   private String token;
 
-  public Long getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(String id) {
     this.id = id;
   }
 

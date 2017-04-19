@@ -82,7 +82,7 @@ public class ProfilesController {
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
   @PreAuthorize(
       "hasPermission(#id, 'br.com.agenciacodeplus.socialcron.profiles.Profile', 'read')")
-  public @ResponseBody ResponseEntity<Profile> find(@PathVariable Long id) {
+  public @ResponseBody ResponseEntity<Profile> find(@PathVariable String id) {
     Profile profile = service.findOne(id);
     
     if(profile == null) {
@@ -103,7 +103,7 @@ public class ProfilesController {
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
   @PreAuthorize(
             "hasPermission(#id, 'br.com.agenciacodeplus.socialcron.profiles.Profile', 'delete')")
-  public @ResponseBody ResponseEntity<Void> delete(@PathVariable Long id) {
+  public @ResponseBody ResponseEntity<Void> delete(@PathVariable String id) {
     Profile profile = service.findOne(id);
     
     if(profile == null) {
