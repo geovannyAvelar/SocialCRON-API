@@ -7,8 +7,9 @@ import br.com.agenciacodeplus.socialcron.events.Event;
 import br.com.agenciacodeplus.socialcron.events.EventsService;
 import br.com.agenciacodeplus.socialcron.events.EventsValidator;
 import br.com.agenciacodeplus.socialcron.helpers.HttpHeadersHelper;
-import br.com.agenciacodeplus.socialcron.posts.Post;
-import br.com.agenciacodeplus.socialcron.posts.PostsService;
+import br.com.agenciacodeplus.socialcron.schedules.Schedule;
+import br.com.agenciacodeplus.socialcron.schedules.SchedulesService;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -35,7 +36,7 @@ public class EventsController {
   
   private EventsService service;
   
-  private PostsService postService;
+  private SchedulesService postService;
   
   @Autowired
   private EventsValidator eventsValidator;
@@ -44,7 +45,7 @@ public class EventsController {
   private ACLPermissions permissions;
   
   @Autowired
-  public EventsController(EventsService service, PostsService postService) {
+  public EventsController(EventsService service, SchedulesService postService) {
     this.service = service;
     this.postService = postService;
   }
@@ -79,7 +80,7 @@ public class EventsController {
     service.save(event);
     permissions.add(authentication, event);
     
-    List<Post> posts = event.generatePosts();
+    List<Schedule> posts = event.generatePosts();
     postService.save(posts);
     permissions.add(authentication, posts);
     

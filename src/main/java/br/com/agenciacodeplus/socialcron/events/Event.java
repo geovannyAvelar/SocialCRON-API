@@ -23,10 +23,10 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import br.com.agenciacodeplus.socialcron.drafts.Draft;
 import br.com.agenciacodeplus.socialcron.periods.Period;
 import br.com.agenciacodeplus.socialcron.posts.Post;
 import br.com.agenciacodeplus.socialcron.profiles.Profile;
+import br.com.agenciacodeplus.socialcron.schedules.Schedule;
 import br.com.agenciacodeplus.socialcron.utils.DateUtils;
 
 @Entity
@@ -63,7 +63,7 @@ public class Event {
   @NotNull
   @Transient
   @JsonInclude(JsonInclude.Include.NON_NULL) 
-  private Draft draft;
+  private Post draft;
   
   @NotNull
   @Transient
@@ -110,11 +110,11 @@ public class Event {
     this.interval = interval;
   }
   
-  public Draft getDraft() {
+  public Post getDraft() {
     return draft;
   }
 
-  public void setDraft(Draft draft) {
+  public void setDraft(Post draft) {
     this.draft = draft;
   }
 
@@ -131,8 +131,8 @@ public class Event {
    * in this interval
    * @return List<Post> A list with all posts in event period
    */
-  public List<Post> generatePosts() {
-    List<Post> posts = new LinkedList<Post>();
+  public List<Schedule> generatePosts() {
+    List<Schedule> posts = new LinkedList<Schedule>();
     Date nextDate = initialDate;
  
     if (limitDate != null) {
@@ -175,10 +175,10 @@ public class Event {
     return event.getId().equals(this.id);
   }
   
-  private Post createPost(Date date) {
-    Post post = new Post();
+  private Schedule createPost(Date date) {
+    Schedule post = new Schedule();
     post.setDate(date);
-    post.setDraft(draft);
+    post.setPost(draft);
     post.setProfile(profile);
     post.setEvent(this);
     post.setCompleted(false);
