@@ -43,8 +43,8 @@ public class Event {
   @Column(name = "initial_date")
   @NotNull
   @Future
-  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mmZ")
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mmZ")
   private Date initialDate;
   
   @Column(name = "limit_date")
@@ -63,7 +63,7 @@ public class Event {
   @NotNull
   @Transient
   @JsonInclude(JsonInclude.Include.NON_NULL) 
-  private Post draft;
+  private Post post;
   
   @NotNull
   @Transient
@@ -110,12 +110,12 @@ public class Event {
     this.interval = interval;
   }
   
-  public Post getDraft() {
-    return draft;
+  public Post getPost() {
+    return post;
   }
 
-  public void setDraft(Post draft) {
-    this.draft = draft;
+  public void setPost(Post post) {
+    this.post = post;
   }
 
   public Profile getProfile() {
@@ -176,12 +176,12 @@ public class Event {
   }
   
   private Schedule createPost(Date date) {
-    Schedule post = new Schedule();
-    post.setDate(date);
-    post.setPost(draft);
-    post.setProfile(profile);
-    post.setEvent(this);
-    post.setCompleted(false);
-    return post;
+    Schedule schedule = new Schedule();
+    schedule.setDate(date);
+    schedule.setPost(post);
+    schedule.setProfile(profile);
+    schedule.setEvent(this);
+    schedule.setCompleted(false);
+    return schedule;
   }
 }

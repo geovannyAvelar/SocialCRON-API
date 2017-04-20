@@ -95,7 +95,7 @@ public class SchedulesController {
     event.setLimitDate(calendar.getTime());
     
     event.setPeriod(Period.FOREVER);
-    event.setDraft(post);
+    event.setPost(post);
     
     Profile profile = new Profile();
     profile.setId(0l);
