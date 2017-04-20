@@ -25,7 +25,7 @@ create table if not exists schedules (
   date datetime not null,
   completed tinyint(1) not null,
   post_id bigint(20) not null,
-  profile_id bigint(20) not null,
+  profile_id varchar(50) not null,
   event_id bigint(20) not null,
   foreign key (post_id) references posts(id) on delete cascade,
   foreign key (profile_id) references profiles(id),
