@@ -24,10 +24,10 @@ create table if not exists schedules (
   id bigint(20) primary key auto_increment,
   date datetime not null,
   completed tinyint(1) not null,
-  draft_id bigint(20) not null,
+  post_id bigint(20) not null,
   profile_id bigint(20) not null,
   event_id bigint(20) not null,
-  foreign key (draft_id) references drafts(id) on delete cascade,
+  foreign key (post_id) references posts(id) on delete cascade,
   foreign key (profile_id) references profiles(id),
   foreign key (event_id) references events(id) on delete cascade
 );
@@ -55,19 +55,19 @@ create table if not exists user_authority (
 );
    
 create table if not exists oauth_access_token (  
-  token_id varchar(256) default null,  
-  token blob,  
-  authentication_id varchar(256) default null,  
-  user_name varchar(256) default null,  
+  token_id varchar(256) default null,
+  token blob,
+  authentication_id varchar(256) default null, 
+  user_name varchar(256) default null,
   client_id varchar(256) default null,
-  authentication blob,  
-  refresh_token varchar(256) default null  
+  authentication blob,
+  refresh_token varchar(256) default null
 ); 
   
 create table if not exists oauth_refresh_token (  
-  token_id varchar(256) default null,  
+  token_id varchar(256) default null,
   token blob,
-  authentication blob  
+  authentication blob
 );
 
 create table if not exists acl_sid (
@@ -91,7 +91,7 @@ create table if not exists acl_object_identity (
   owner_sid bigint unsigned,
   entries_inheriting boolean not null,
   unique key uk_acl_object_identity (object_id_class, object_id_identity),
-  constraint fk_acl_object_identity_parent 
+  constraint fk_acl_object_identity_parent
                                   foreign key (parent_object) references acl_object_identity (id),
   constraint fk_acl_object_identity_class foreign key (object_id_class) references acl_class (id),
   constraint fk_acl_object_identity_owner foreign key (owner_sid) references acl_sid (id)
