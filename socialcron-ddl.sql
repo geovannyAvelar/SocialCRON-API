@@ -1,4 +1,6 @@
-create table if not exists drafts (
+# SocialCRON-CORE database schema
+
+create table if not exists posts (
   id bigint(20) primary key auto_increment,
   title varchar(50) not null,
   content varchar(1000) not null
@@ -18,7 +20,7 @@ create table if not exists events (
   time_interval int
 );
 
-create table if not exists posts (
+create table if not exists schedules (
   id bigint(20) primary key auto_increment,
   date datetime not null,
   completed tinyint(1) not null,
@@ -89,7 +91,8 @@ create table if not exists acl_object_identity (
   owner_sid bigint unsigned,
   entries_inheriting boolean not null,
   unique key uk_acl_object_identity (object_id_class, object_id_identity),
-  constraint fk_acl_object_identity_parent foreign key (parent_object) references acl_object_identity (id),
+  constraint fk_acl_object_identity_parent 
+                                  foreign key (parent_object) references acl_object_identity (id),
   constraint fk_acl_object_identity_class foreign key (object_id_class) references acl_class (id),
   constraint fk_acl_object_identity_owner foreign key (owner_sid) references acl_sid (id)
 );
@@ -104,9 +107,18 @@ create table if not exists acl_entry (
   audit_success boolean not null,
   audit_failure boolean not null,
   unique key unique_acl_entry (acl_object_identity, ace_order),
-  constraint fk_acl_entry_object foreign key (acl_object_identity) references acl_object_identity (id),
+  constraint fk_acl_entry_object 
+                            foreign key (acl_object_identity) references acl_object_identity (id),
   constraint fk_acl_entry_acl foreign key (sid) references acl_sid (id)
 );
 
+insert into authority(name) values('ADMIN');
+insert into authority(name) values('USER');
+
+# BCrypt hash
 # Password is root
-insert into user (username, email, password, activated) values ('root', 'root@root.com', '$2a$06$LOO5IrurVYKTAIIH/Ojd/.0FL9oVXRlsmj8OZRb0xh0C/Nr1WEEFm', true);
+insert into user (username, email, password, activated) 
+                    values ('root', 'root@root.com', 
+                            '$2a$06$LOO5IrurVYKTAIIH/Ojd/.0FL9oVXRlsmj8OZRb0xh0C/Nr1WEEFm', true);
+
+insert into user_authority(username, authority) values('root', 'ADMIN');
