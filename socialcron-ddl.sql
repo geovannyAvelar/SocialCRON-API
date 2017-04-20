@@ -7,7 +7,8 @@ create table if not exists posts (
 );
 
 create table if not exists profiles (
-  id varchar(50) primary key,
+  id bigint(20) primary key auto_increment,
+  profile_id varchar(50) not null unique,
   name varchar(256) not null,
   token varchar(256) not null
 );
@@ -25,7 +26,7 @@ create table if not exists schedules (
   date datetime not null,
   completed tinyint(1) not null,
   post_id bigint(20) not null,
-  profile_id varchar(50) not null,
+  profile_id bigint(20) not null,
   event_id bigint(20) not null,
   foreign key (post_id) references posts(id) on delete cascade,
   foreign key (profile_id) references profiles(id),

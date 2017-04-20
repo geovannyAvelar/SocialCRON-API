@@ -14,7 +14,7 @@ public class ProfilesService {
     dao.save(profile);
   }
   
-  public Profile findOne(String id) {
+  public Profile findOne(Long id) {
     return dao.findOne(id);
   }
   
@@ -22,7 +22,7 @@ public class ProfilesService {
     return dao.findAll();
   }
   
-  public boolean exists(String id) {
+  public boolean exists(Long id) {
     return dao.exists(id);
   }
   

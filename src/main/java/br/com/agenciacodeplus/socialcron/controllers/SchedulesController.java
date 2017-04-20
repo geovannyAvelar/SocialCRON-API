@@ -98,7 +98,7 @@ public class SchedulesController {
     event.setDraft(post);
     
     Profile profile = new Profile();
-    profile.setId("0");
+    profile.setId(0l);
     profile.setName("Sérgio Carneiro");
     profile.setToken("YW5kIHRoZSBkdXN0IHJldHVybnMgdG8gdGhlIGdyb3VuZCBpdCBjYW1lIGZyb20sIGFuZCB0aGUg"
                     + "c3Bpcml0IHJldHVybnMgdG8gR29kIHdobyBnYXZlIGl0Lg==");

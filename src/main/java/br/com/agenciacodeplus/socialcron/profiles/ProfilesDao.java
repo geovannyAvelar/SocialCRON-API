@@ -4,6 +4,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface ProfilesDao extends JpaRepository<Profile, String> {
+public interface ProfilesDao extends JpaRepository<Profile, Long> {
 
 }
