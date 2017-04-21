@@ -34,7 +34,7 @@ public class Schedule {
   @Column(name = "date")
   @NotNull
   @Future
-  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mmZ")
   @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mmZ")
   private Date date;
   
