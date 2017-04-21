@@ -1,9 +1,15 @@
 package br.com.agenciacodeplus.socialcron.events;
 
+import br.com.agenciacodeplus.socialcron.periods.Period;
+import br.com.agenciacodeplus.socialcron.posts.Post;
+import br.com.agenciacodeplus.socialcron.profiles.Profile;
+import br.com.agenciacodeplus.socialcron.schedules.Schedule;
+import br.com.agenciacodeplus.socialcron.utils.DateUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,23 +17,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Future;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-import br.com.agenciacodeplus.socialcron.periods.Period;
-import br.com.agenciacodeplus.socialcron.posts.Post;
-import br.com.agenciacodeplus.socialcron.profiles.Profile;
-import br.com.agenciacodeplus.socialcron.schedules.Schedule;
-import br.com.agenciacodeplus.socialcron.utils.DateUtils;
 
 @Entity
 @Table(name = "events")
@@ -51,13 +48,17 @@ public class Event {
   @Future
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   @JsonFormat(pattern = "yyyy-MM-dd")
+  @JsonInclude(JsonInclude.Include.NON_NULL) 
   private Date limitDate;
   
   @Column(name = "period")
+  @JsonInclude(JsonInclude.Include.NON_NULL) 
   private Period period;
   
   @Column(name = "time_interval")
   @Min(1)
+  @Max(60)
+  @JsonInclude(JsonInclude.Include.NON_NULL) 
   private Integer interval;
     
   @NotNull
