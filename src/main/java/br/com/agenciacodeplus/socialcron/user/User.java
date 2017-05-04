@@ -104,6 +104,14 @@ public class User {
     this.name = name;
   }
 
+  public String getAvatar() {
+    return avatar;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
+  }
+
   public boolean isActivated() {
     return activated;
   }
