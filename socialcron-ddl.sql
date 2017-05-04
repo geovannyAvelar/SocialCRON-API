@@ -38,6 +38,7 @@ create table if not exists user (
   email varchar(50) default null,
   password varchar(500) default null,
   name varchar(50) default null,
+  avatar varchar(256) not null,
   activated tinyint(1) default '0',
   activationkey varchar(50) default null,
   resetpasswordkey varchar(50) default null
