@@ -1,4 +1,4 @@
-# SocialCRON-CORE
+# SocialCRON-API
 [![Build Status](https://travis-ci.org/geovannyAvelar/SocialCRON-CORE.svg?branch=master)](https://travis-ci.org/geovannyAvelar/SocialCRON-CORE) [![Code Climate](https://codeclimate.com/github/geovannyAvelar/SocialCRON-CORE/badges/gpa.svg)](https://codeclimate.com/github/geovannyAvelar/SocialCRON-CORE) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
 SocialCRON is an open-source platform to schedule posts on social media sites
