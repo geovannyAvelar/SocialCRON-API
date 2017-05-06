@@ -8,19 +8,6 @@ public class DateUtils {
   private static int SUM = 0;
   private static int SUBTRACT = 1;
 
-  private static Date manipulateDate(Date date, int type, Integer quantity, int operation) {
-    Calendar c = Calendar.getInstance();
-    c.setTime(date);
-
-    if (operation == 0) {
-      c.set(type, c.get(type) + quantity);
-    } else {
-      c.set(type, c.get(type) - quantity);
-    }
-
-    return c.getTime();
-  }
-
   public static Date sumDate(Date date, int type, Integer quantity) {
     return manipulateDate(date, type, quantity, SUM);
   }
@@ -61,6 +48,35 @@ public class DateUtils {
  
     throw new IllegalArgumentException("The string doesn't correspond to a constant");
  
+  }
+  
+  public static Date convertTimestampToDate(Long timestamp) {
+    if(timestamp < 0) {
+      throw new IllegalArgumentException("Timestamp should be a positive Long");
+    }
+    
+    return new Date(timestamp);
+  }
+  
+  private static Date manipulateDate(Date date, int type, Integer quantity, int operation) {
+    if(date == null) {
+      throw new IllegalArgumentException("Sum/subtraction date should not be null");
+    }
+    
+    if(quantity < 0) {
+      throw new IllegalArgumentException("Sum/subtraction should not receive a negative value");
+    }
+    
+    Calendar c = Calendar.getInstance();
+    c.setTime(date);
+
+    if (operation == 0) {
+      c.set(type, c.get(type) + quantity);
+    } else {
+      c.set(type, c.get(type) - quantity);
+    }
+
+    return c.getTime();
   }
   
 }
