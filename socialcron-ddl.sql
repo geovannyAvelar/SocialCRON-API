@@ -10,7 +10,8 @@ create table if not exists profiles (
   id bigint(20) primary key auto_increment,
   profile_id varchar(50) not null,
   name varchar(256) not null,
-  token varchar(256) not null
+  token varchar(256) not null,
+  expires datetime not null
 );
 
 create table if not exists events (
