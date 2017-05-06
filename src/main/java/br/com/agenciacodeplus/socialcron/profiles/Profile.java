@@ -41,7 +41,6 @@ public class Profile {
   private String token;
   
   @Column(name = "expires")
-  @NotNull
   private Date expires;
   
   public Long getId() {
