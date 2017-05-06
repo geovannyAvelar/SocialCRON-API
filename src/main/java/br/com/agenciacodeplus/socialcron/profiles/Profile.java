@@ -1,5 +1,6 @@
 package br.com.agenciacodeplus.socialcron.profiles;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,6 +40,10 @@ public class Profile {
   @NotEmpty
   private String token;
   
+  @Column(name = "expires")
+  @NotNull
+  private Date expires;
+  
   public Long getId() {
     return id;
   }
@@ -69,6 +74,14 @@ public class Profile {
 
   public void setToken(String token) {
     this.token = token;
+  }
+
+  public Date getExpires() {
+    return expires;
+  }
+
+  public void setExpires(Date expires) {
+    this.expires = expires;
   }
   
 }

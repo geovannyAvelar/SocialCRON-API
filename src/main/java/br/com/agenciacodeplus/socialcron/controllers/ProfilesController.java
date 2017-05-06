@@ -22,10 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.agenciacodeplus.socialcron.acl.ACLPermissions;
-import br.com.agenciacodeplus.socialcron.apis.facebook.FacebookTokenGenerator;
+import br.com.agenciacodeplus.socialcron.facebook.FacebookTokenHandler;
 import br.com.agenciacodeplus.socialcron.helpers.HttpHeadersHelper;
 import br.com.agenciacodeplus.socialcron.profiles.Profile;
 import br.com.agenciacodeplus.socialcron.profiles.ProfilesService;
+import br.com.agenciacodeplus.socialcron.utils.DateUtils;
 import facebook4j.auth.AccessToken;
 
 @RestController
@@ -49,7 +50,7 @@ public class ProfilesController {
                                                           Errors errors,
                                                           Authentication authentication,
                                                           HttpHeadersHelper httpHeadersHelper,
-                                                          FacebookTokenGenerator fbTokenGenerator) {
+                                                          FacebookTokenHandler fbTokenHandler) {
     
     if(errors.hasErrors()) {
       return new ResponseEntity<Void>(HttpStatus.BAD_GATEWAY);
@@ -65,13 +66,14 @@ public class ProfilesController {
       }
     }
     
-    AccessToken longLivedToken = fbTokenGenerator.refreshToken(new AccessToken(profile.getToken()));
+    AccessToken longLivedToken = fbTokenHandler.refreshToken(new AccessToken(profile.getToken()));
     
     if(longLivedToken == null) {
       return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
     }
     
     profile.setToken(longLivedToken.getToken());
+    profile.setExpires(DateUtils.convertTimestampToDate(longLivedToken.getExpires()));
     service.save(profile);
     permissions.add(authentication, profile);
     return new ResponseEntity<Void>(HttpStatus.CREATED);
