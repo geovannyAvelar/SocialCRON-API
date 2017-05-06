@@ -7,12 +7,12 @@
 
 	<groupId>br.com.agenciacodeplus</groupId>
 	<artifactId>socialcron</artifactId>
-	<version>2.8.19</version>
+	<version>2.8.20</version>
 	<packaging>war</packaging>
 
-	<name>SocialCRON-CORE</name>
+	<name>SocialCRON-API</name>
 	<description>
-	   SocialCRON is a open-source platform to schedule post on social media sites
+	   SocialCRON platform RESTFul API. SocialCRON is a open-source platform to schedule post on social media sites
 	</description>
 
 	<parent>
