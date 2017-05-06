@@ -11,7 +11,7 @@ create table if not exists profiles (
   profile_id varchar(50) not null,
   name varchar(256) not null,
   token varchar(256) not null,
-  expires datetime not null
+  expires bigint(20) not null
 );
 
 create table if not exists events (

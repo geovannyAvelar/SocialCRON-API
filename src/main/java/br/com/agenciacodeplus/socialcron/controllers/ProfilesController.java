@@ -1,9 +1,13 @@
 package br.com.agenciacodeplus.socialcron.controllers;
 
+import br.com.agenciacodeplus.socialcron.acl.ACLPermissions;
+import br.com.agenciacodeplus.socialcron.facebook.FacebookTokenHandler;
+import br.com.agenciacodeplus.socialcron.helpers.HttpHeadersHelper;
+import br.com.agenciacodeplus.socialcron.profiles.Profile;
+import br.com.agenciacodeplus.socialcron.profiles.ProfilesService;
+import facebook4j.auth.AccessToken;
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,14 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import br.com.agenciacodeplus.socialcron.acl.ACLPermissions;
-import br.com.agenciacodeplus.socialcron.facebook.FacebookTokenHandler;
-import br.com.agenciacodeplus.socialcron.helpers.HttpHeadersHelper;
-import br.com.agenciacodeplus.socialcron.profiles.Profile;
-import br.com.agenciacodeplus.socialcron.profiles.ProfilesService;
-import br.com.agenciacodeplus.socialcron.utils.DateUtils;
-import facebook4j.auth.AccessToken;
 
 @RestController
 @RequestMapping("/v1/profiles")
@@ -52,8 +48,8 @@ public class ProfilesController {
                                                           HttpHeadersHelper httpHeadersHelper,
                                                           FacebookTokenHandler fbTokenHandler) {
     
-    if(errors.hasErrors()) {
-      return new ResponseEntity<Void>(HttpStatus.BAD_GATEWAY);
+    if(errors.hasErrors()) {    
+      return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
     }
     
     HttpHeaders headers = null;
@@ -66,14 +62,16 @@ public class ProfilesController {
       }
     }
     
-    AccessToken longLivedToken = fbTokenHandler.refreshToken(new AccessToken(profile.getToken()));
+    AccessToken token = new AccessToken(profile.getToken(), profile.getExpires());
+    
+    AccessToken longLivedToken = fbTokenHandler.refreshToken(token);
     
     if(longLivedToken == null) {
       return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
     }
     
     profile.setToken(longLivedToken.getToken());
-    profile.setExpires(DateUtils.convertTimestampToDate(longLivedToken.getExpires()));
+    profile.setExpires(profile.getExpires() + longLivedToken.getExpires());
     service.save(profile);
     permissions.add(authentication, profile);
     return new ResponseEntity<Void>(HttpStatus.CREATED);
