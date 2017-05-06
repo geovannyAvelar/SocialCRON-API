@@ -1,5 +1,5 @@
 # SocialCRON-API
-[![Build Status](https://travis-ci.org/geovannyAvelar/SocialCRON-API.svg?branch=master)](https://travis-ci.org/geovannyAvelar/SocialCRON-API) [![Code Climate](https://codeclimate.com/github/geovannyAvelar/SocialCRON-CORE/badges/gpa.svg)](https://codeclimate.com/github/geovannyAvelar/SocialCRON-CORE) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
+[![Build Status](https://travis-ci.org/geovannyAvelar/SocialCRON-API.svg?branch=master)](https://travis-ci.org/geovannyAvelar/SocialCRON-API) [![Issue Count](https://codeclimate.com/github/geovannyAvelar/SocialCRON-CORE/badges/issue_count.svg)](https://codeclimate.com/github/geovannyAvelar/SocialCRON-CORE) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
 SocialCRON platform RESTFul API. SocialCRON is an open-source platform to schedule posts on social media sites
 
@@ -33,15 +33,15 @@ To use SocialCRON, you will need a Facebook app to connect to Facebook API. You 
 ### 1.3 Build
 
 1. Get the source typing the command:
-**git clone https://github.com/geovannyAvelar/SocialCRON-CORE.git**
+**git clone https://github.com/geovannyAvelar/SocialCRON-API.git**
 
 2. Enter on project directory:
-**cd SocialCRON-CORE**
+**cd SocialCRON-API**
 
 3. With Maven, compile and package with:
 **mvn install -DskipTests**
 
-4. The depedencies will be resolved and a file named socialcron-CORE-X.war will be generated on target directory, 'X' is the version name. Now you should deploy this .war file on an application server.
+4. The depedencies will be resolved and a file named socialcron-API-X.war will be generated on target directory, 'X' is the version name. Now you should deploy this .war file on an application server.
 
 ## 2 License
 This project is under The MIT License (MIT) terms.
