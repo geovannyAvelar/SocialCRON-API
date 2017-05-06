@@ -24,7 +24,7 @@ public class Profile {
   @Column(name = "id")
   private Long id;
   
-  @Column(name = "profile_id", unique = true)
+  @Column(name = "profile_id")
   @NotNull
   private String profileId;
   
