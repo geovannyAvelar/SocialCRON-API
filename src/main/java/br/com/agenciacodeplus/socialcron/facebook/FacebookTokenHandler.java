@@ -37,8 +37,7 @@ public class FacebookTokenHandler {
     try {
       apiResponse = facebook.callGetAPI("/oauth/access_token", params);
       String accessToken = apiResponse.asJSONObject().getString("access_token");
-      Long expires = apiResponse.asJSONObject().getLong("expires_in"); 
-      AccessToken newAccessToken = new AccessToken(accessToken, expires);
+      AccessToken newAccessToken = new AccessToken(accessToken, 5270400l);
       LOGGER.debug("Facebook access token generated: " + newAccessToken.getToken());
       LOGGER.debug("Expires at: " + newAccessToken.getExpires());
       return newAccessToken;
