@@ -5,7 +5,10 @@ import br.com.agenciacodeplus.socialcron.facebook.FacebookTokenHandler;
 import br.com.agenciacodeplus.socialcron.helpers.HttpHeadersHelper;
 import br.com.agenciacodeplus.socialcron.profiles.Profile;
 import br.com.agenciacodeplus.socialcron.profiles.ProfilesService;
+import br.com.agenciacodeplus.socialcron.utils.DateUtils;
 import facebook4j.auth.AccessToken;
+
+import java.util.Calendar;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,16 +65,15 @@ public class ProfilesController {
       }
     }
     
-    AccessToken token = new AccessToken(profile.getToken(), profile.getExpires());
-    
-    AccessToken longLivedToken = fbTokenHandler.refreshToken(token);
+    AccessToken longLivedToken = fbTokenHandler.refreshToken(new AccessToken(profile.getToken()));
     
     if(longLivedToken == null) {
       return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
     }
     
     profile.setToken(longLivedToken.getToken());
-    profile.setExpires(profile.getExpires() + longLivedToken.getExpires());
+    // Facebook long lived tokens expires in two months
+    profile.setExpires(DateUtils.sumDate(profile.getCreatedAt(), Calendar.MONTH, 2));
     service.save(profile);
     permissions.add(authentication, profile);
     return new ResponseEntity<Void>(HttpStatus.CREATED);

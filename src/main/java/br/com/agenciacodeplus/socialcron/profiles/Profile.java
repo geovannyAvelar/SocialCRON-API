@@ -1,5 +1,7 @@
 package br.com.agenciacodeplus.socialcron.profiles;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -39,9 +42,16 @@ public class Profile {
   @NotEmpty
   private String token;
   
-  @Column(name = "expires")
+  @Column(name = "created_at")
   @NotNull
-  private Long expires;
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mmZ")
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mmZ")
+  private Date createdAt;
+  
+  @Column(name = "expires")
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mmZ")
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mmZ")
+  private Date expires;
   
   public Long getId() {
     return id;
@@ -75,11 +85,19 @@ public class Profile {
     this.token = token;
   }
 
-  public Long getExpires() {
+  public Date getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public Date getExpires() {
     return expires;
   }
 
-  public void setExpires(Long expires) {
+  public void setExpires(Date expires) {
     this.expires = expires;
   }
   
