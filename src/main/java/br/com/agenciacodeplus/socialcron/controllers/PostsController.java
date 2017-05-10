@@ -61,6 +61,7 @@ public class PostsController {
     
     service.save(post);
     permissions.add(authentication, post);
+    headers = httpHeadersHelper.addLocationHeader("/v2/posts", post.getId());
     return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     
   }

@@ -79,12 +79,13 @@ public class EventsController {
     
     service.save(event);
     permissions.add(authentication, event);
+    headers = httpHeadersHelper.addLocationHeader("/v1/events", event.getId());
     
     List<Schedule> posts = event.generatePosts();
     postService.save(posts);
     permissions.add(authentication, posts);
     
-    return new ResponseEntity<Void>(HttpStatus.CREATED);
+    return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     
   }
   

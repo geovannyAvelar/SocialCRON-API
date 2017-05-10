@@ -76,6 +76,7 @@ public class ProfilesController {
     profile.setExpires(DateUtils.sumDate(profile.getCreatedAt(), Calendar.MONTH, 2));
     service.save(profile);
     permissions.add(authentication, profile);
+    headers = httpHeadersHelper.addLocationHeader("/v1/profiles", profile.getId());
     return new ResponseEntity<Void>(HttpStatus.CREATED);
     
   }
