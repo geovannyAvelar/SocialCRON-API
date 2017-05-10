@@ -46,7 +46,7 @@ public class PostsController {
                                                               Authentication authentication,
                                                               HttpHeadersHelper httpHeadersHelper) {
     if(errors.hasErrors()) {
-      return new ResponseEntity<Void>(HttpStatus.BAD_GATEWAY);
+      return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
     }
     
     HttpHeaders headers = null;
