@@ -73,7 +73,7 @@ public class PostsController {
   public @ResponseBody ResponseEntity<Void> update(@Valid @RequestBody Post post,
                                                                        Errors errors) {
     if(errors.hasErrors() || post.getId() == null) {
-      return new ResponseEntity<Void>(HttpStatus.BAD_GATEWAY);
+      return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
     }
     
     if(!service.exists(post.getId())) {
