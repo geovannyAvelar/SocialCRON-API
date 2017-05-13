@@ -6,6 +6,14 @@ create table if not exists posts (
   content varchar(1000) not null
 );
 
+create table if not exists photos (
+  id bigint(20) primary key auto_increment,
+  filename varchar(100) not null,
+  media_type varchar(50) not null,
+  post_id bigint(20),
+  foreign key (post_id) references posts(id)
+);
+
 create table if not exists profiles (
   id bigint(20) primary key auto_increment,
   profile_id varchar(50) not null,
