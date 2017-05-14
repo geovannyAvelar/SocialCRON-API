@@ -1,17 +1,15 @@
 package br.com.agenciacodeplus.socialcron.controllers;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -85,22 +83,21 @@ public class PhotosController {
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
   @PreAuthorize(
             "hasPermission(#id, 'br.com.agenciacodeplus.socialcron.photos.Photo', 'read')")
-  public ResponseEntity<InputStreamResource> findOne(@PathVariable Long id) 
-                                                                      throws FileNotFoundException {
+  public ResponseEntity<String> findOne(@PathVariable Long id) throws IOException {
     Photo photo = service.findOne(id);
     
     if(photo == null) {
-      return new ResponseEntity<InputStreamResource>(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
     }
     
     File image = photo.findImage();
-    InputStream fileStream = new FileInputStream(image);
+    byte[] imageBytes = Files.readAllBytes(image.toPath()); 
     
     return ResponseEntity
                 .ok()
                 .contentLength(image.length())
                 .contentType(MediaType.parseMediaType(photo.getMediaType()))
-                .body(new InputStreamResource(fileStream));
+                .body(new String(Base64.encodeBase64(imageBytes), "UTF-8"));
   }
   
   // FIXME The for should be removed from controller. Bussiness logic cannot be here
