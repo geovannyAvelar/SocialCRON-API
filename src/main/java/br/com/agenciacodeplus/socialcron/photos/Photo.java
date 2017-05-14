@@ -89,7 +89,7 @@ public class Photo {
   public void saveFile() throws EmptyFileException, IOException {
     String fileExtension = getExtension(file.getOriginalFilename());
     String filename = generateUniqueFilename(file.getOriginalFilename(), fileExtension);
-    this.mediaType = "application/" + fileExtension;
+    this.mediaType = "application/" + fileExtension.replace(".", "");
     
     // FIXME File path shouldn't be hardcoded
     if (!file.isEmpty()) {
