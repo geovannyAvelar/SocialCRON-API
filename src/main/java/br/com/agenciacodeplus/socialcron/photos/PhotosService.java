@@ -1,5 +1,6 @@
 package br.com.agenciacodeplus.socialcron.photos;
 
+import br.com.agenciacodeplus.socialcron.posts.Post;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class PhotosService {
   
   public List<Photo> findAll() {
     return dao.findAll();
+  }
+  
+  public List<Photo> findByPost(Post post) {
+    return dao.findByPost(post);
   }
   
   public void delete(Long id) {

@@ -1,11 +1,5 @@
 package br.com.agenciacodeplus.socialcron.controllers;
 
-import br.com.agenciacodeplus.socialcron.acl.ACLPermissions;
-import br.com.agenciacodeplus.socialcron.exceptions.EmptyFileException;
-import br.com.agenciacodeplus.socialcron.photos.Photo;
-import br.com.agenciacodeplus.socialcron.photos.PhotosService;
-import br.com.agenciacodeplus.socialcron.posts.Post;
-import br.com.agenciacodeplus.socialcron.posts.PostsService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,6 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
@@ -29,6 +26,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import br.com.agenciacodeplus.socialcron.acl.ACLPermissions;
+import br.com.agenciacodeplus.socialcron.exceptions.EmptyFileException;
+import br.com.agenciacodeplus.socialcron.photos.Photo;
+import br.com.agenciacodeplus.socialcron.photos.PhotosService;
+import br.com.agenciacodeplus.socialcron.posts.Post;
+import br.com.agenciacodeplus.socialcron.posts.PostsService;
 
 @RestController
 @RequestMapping(value = "/v2/photos")
@@ -97,6 +101,29 @@ public class PhotosController {
                 .contentLength(image.length())
                 .contentType(MediaType.parseMediaType(photo.getMediaType()))
                 .body(new InputStreamResource(fileStream));
+  }
+  
+  // FIXME The for should be removed from controller. Bussiness logic cannot be here
+  @CrossOrigin
+  @RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
+  @PreAuthorize(
+            "hasPermission(#id, 'br.com.agenciacodeplus.socialcron.posts.Post', 'read')")
+  public ResponseEntity<List<String>> findAll(@PathVariable Long id) {
+    Post post = postsService.findOne(id);
+    
+    if(post == null) {
+      return new ResponseEntity<List<String>>(HttpStatus.NOT_FOUND);
+    }
+    
+    List<Photo> photos = service.findByPost(post);
+    List<String> path = new LinkedList<String>();
+    
+    for(Photo photo : photos) {
+      path.add("/v2/photos/" + photo.getId());
+    }
+    
+    return ResponseEntity.ok(path);
+    
   }
   
 }

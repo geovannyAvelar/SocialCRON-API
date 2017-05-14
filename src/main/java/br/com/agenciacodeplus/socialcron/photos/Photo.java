@@ -1,12 +1,12 @@
 package br.com.agenciacodeplus.socialcron.photos;
 
-import br.com.agenciacodeplus.socialcron.exceptions.EmptyFileException;
-import br.com.agenciacodeplus.socialcron.posts.Post;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,12 +15,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.agenciacodeplus.socialcron.exceptions.EmptyFileException;
+import br.com.agenciacodeplus.socialcron.posts.Post;
 
 @Entity
 @Table(name = "photos")
@@ -37,12 +43,13 @@ public class Photo {
   private MultipartFile file;
   
   @Column(name = "filename")
+  @JsonIgnore
   private String filename;
   
   @Column(name = "media_type")
   private String mediaType;
   
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.REMOVE)
   @JoinColumn(name = "post_id", referencedColumnName = "ID")
   private Post post;
 
@@ -69,7 +76,7 @@ public class Photo {
   public void setFilename(String filename) {
     this.filename = filename;
   }
-  
+
   public String getMediaType() {
     return mediaType;
   }

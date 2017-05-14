@@ -11,7 +11,7 @@ create table if not exists photos (
   filename varchar(100) not null,
   media_type varchar(50) not null,
   post_id bigint(20),
-  foreign key (post_id) references posts(id)
+  foreign key (post_id) references posts(id) on delete cascade;
 );
 
 create table if not exists profiles (
