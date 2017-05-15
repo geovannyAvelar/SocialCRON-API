@@ -1,11 +1,12 @@
 package br.com.agenciacodeplus.socialcron.photos;
 
-import java.io.BufferedOutputStream;
+import br.com.agenciacodeplus.socialcron.exceptions.EmptyFileException;
+import br.com.agenciacodeplus.socialcron.posts.Post;
+import br.com.agenciacodeplus.socialcron.utils.FileUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Date;
-
+import java.nio.file.Files;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,18 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import br.com.agenciacodeplus.socialcron.exceptions.EmptyFileException;
-import br.com.agenciacodeplus.socialcron.posts.Post;
 
 @Entity
 @Table(name = "photos")
@@ -40,14 +35,15 @@ public class Photo {
   private Long id;
   
   @Transient
+  @JsonIgnore
   private MultipartFile file;
   
   @Column(name = "filename")
   @JsonIgnore
   private String filename;
   
-  @Column(name = "media_type")
-  private String mediaType;
+  @Transient
+  private String base64Image;
   
   @ManyToOne(cascade = CascadeType.REMOVE)
   @JoinColumn(name = "post_id", referencedColumnName = "ID")
@@ -77,14 +73,6 @@ public class Photo {
     this.filename = filename;
   }
 
-  public String getMediaType() {
-    return mediaType;
-  }
-
-  public void setMediaType(String mediaType) {
-    this.mediaType = mediaType;
-  }
-
   public Post getPost() {
     return post;
   }
@@ -92,23 +80,20 @@ public class Photo {
   public void setPost(Post post) {
     this.post = post;
   }
+  
+  public String getBase64Image() {
+    return base64Image;
+  }
+
+  public void setBase64Image(String base64Image) {
+    this.base64Image = base64Image;
+  }
 
   public void saveFile() throws EmptyFileException, IOException {
-    String fileExtension = getExtension(file.getOriginalFilename());
-    String filename = generateUniqueFilename(file.getOriginalFilename(), fileExtension);
-    this.mediaType = "application/" + fileExtension.replace(".", "");
-    
-    // FIXME File path shouldn't be hardcoded
-    if (!file.isEmpty()) {
-      byte[] bytes = file.getBytes();
-      File file = new File("/var/socialcron/images/" + filename);
-      BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(file));
-      stream.write(bytes);
-      stream.close();
-      this.filename = filename;
-    } else {
-      throw new EmptyFileException();
-    }
+    String fileExtension = FileUtils.getExtension(file);
+    String filename = FileUtils.generateUniqueFilename(file.getOriginalFilename(), fileExtension);
+    FileUtils.saveFile(file, "/var/socialcron/images/" + filename);
+    this.filename = filename;
   }
   
   public File findImage() {
@@ -127,6 +112,14 @@ public class Photo {
     
   }
   
+  public String generateImageBase64() throws IOException {
+    File image = findImage();
+    byte[] imageBytes = Files.readAllBytes(image.toPath());
+    String base64Image = new String(Base64.encodeBase64(imageBytes), "UTF-8");
+    this.base64Image = base64Image;
+    return base64Image;
+  }
+  
   public boolean equals(Object object) {
     if(!object.getClass().equals(Photo.class)) {
       return false;
@@ -139,25 +132,6 @@ public class Photo {
     }
     
     return photo.getId().equals(this.id);
-    
-  }
-  
-  // FIXME Out of scope. This method should be in an auxilary class
-  private String generateUniqueFilename(String seed, String extension) {
-    String dataToHash = new Long(new Date().getTime()).toString() + seed;
-    String filename = Base64.encodeBase64URLSafeString(dataToHash.getBytes()) + extension;
-    return filename;
-  }
-  
-  //FIXME Out of scope. This method should be in an auxilary class
-  private String getExtension(String filename) {
-    int length = filename.length();
-    
-    if(length < 5) {
-      throw new IllegalArgumentException("Invalid filename. A file name should be greater than 5");
-    }
-    
-    return filename.substring(length - 4, length);
     
   }
   
