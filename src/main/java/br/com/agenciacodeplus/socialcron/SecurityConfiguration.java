@@ -39,7 +39,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   public void configure(WebSecurity web) throws Exception {
     web.ignoring()
       .antMatchers("/favicon.ico")
-      .antMatchers("/v1/posts/day/2014-11-18");
+      .antMatchers("/v1/posts/day/2014-11-18")
+      .antMatchers("/images/**");
   }
 
   @Override

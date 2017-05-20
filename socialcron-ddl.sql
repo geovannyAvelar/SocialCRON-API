@@ -9,6 +9,7 @@ create table if not exists posts (
 create table if not exists photos (
   id bigint(20) primary key auto_increment,
   filename varchar(100) not null,
+  path varchar(256) not null,
   post_id bigint(20),
   foreign key (post_id) references posts(id) on delete cascade
 );

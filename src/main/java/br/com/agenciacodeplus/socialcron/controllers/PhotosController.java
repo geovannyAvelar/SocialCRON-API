@@ -83,8 +83,6 @@ public class PhotosController {
       return new ResponseEntity<Photo>(HttpStatus.NOT_FOUND);
     }
     
-    photo.generateImageBase64();
-    
     return ResponseEntity.ok(photo);
     
   }
@@ -101,10 +99,6 @@ public class PhotosController {
     }
     
     List<Photo> photos = service.findByPost(post);
-    
-    for(Photo photo : photos) {
-      photo.generateImageBase64();
-    }
     
     return ResponseEntity.ok(photos);
     
