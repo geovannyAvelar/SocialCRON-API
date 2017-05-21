@@ -9,7 +9,6 @@ import br.com.agenciacodeplus.socialcron.posts.PostsService;
 import br.com.agenciacodeplus.socialcron.profiles.Profile;
 import br.com.agenciacodeplus.socialcron.schedules.Schedule;
 import br.com.agenciacodeplus.socialcron.schedules.SchedulesService;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -62,11 +61,41 @@ public class SchedulesController {
   }
   
   @CrossOrigin
+  @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+  @PostFilter("hasAuthority('ADMIN') or "
+           + "hasPermission(#id, 'br.com.agenciacodeplus.socialcron.schedules.Schedule', 'write')")
+  public @ResponseBody ResponseEntity<Void> markAsCompleted(@PathVariable Long id) {
+    Schedule schedule = service.findOne(id);
+    
+    if(schedule == null) {
+      return ResponseEntity.badRequest().build();
+    }
+    
+    schedule.setCompleted(true);
+    service.save(schedule);
+    
+    return ResponseEntity.noContent().build();
+    
+  }
+  
+  @CrossOrigin
   @RequestMapping(value = "/day/{day}", method = RequestMethod.GET)
   @PostFilter("hasAuthority('ADMIN') or hasPermission(filterObject, 'read')")
   public @ResponseBody List<Schedule> findByDay(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd")
                                                 Date day) {
     return service.findByDay(day);
+  }
+  
+  @CrossOrigin
+  @RequestMapping(value = "/range/{from}/{to}", method = RequestMethod.GET)
+  @PostFilter("hasAuthority('ADMIN') or hasPermission(filterObject, 'read')")
+  public @ResponseBody List<Schedule> findByRange(@PathVariable 
+                                                  @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mmZ") 
+                                                   Date from,
+                                                  @PathVariable 
+                                                  @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mmZ") 
+                                                   Date to) {
+    return service.findByRange(from, to);
   }
   
   @CrossOrigin

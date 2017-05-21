@@ -142,6 +142,9 @@ public class Event {
        */
       Integer period = DateUtils.stringToDateConstant(this.period.toString());
       
+      // First post
+      posts.add(createPost(initialDate));
+      
       /*
        * Get all the dates between initial date and limit date and creates the list with posts in
        * this interval

@@ -19,7 +19,7 @@ public class EventsValidator implements Validator {
  
     Event dto = (Event) target;
  
-    if (dto.getLimitDate() != null) {
+    if (dto.getInitialDate() != null && dto.getLimitDate() != null) {
  
       // Initial date should be before limit date
       if (dto.getInitialDate().after(dto.getLimitDate())) {
