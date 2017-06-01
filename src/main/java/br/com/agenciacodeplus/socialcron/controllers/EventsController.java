@@ -1,15 +1,14 @@
 package br.com.agenciacodeplus.socialcron.controllers;
 
-import java.util.List;
-
 import br.com.agenciacodeplus.socialcron.acl.ACLPermissions;
+import br.com.agenciacodeplus.socialcron.dispatcher.Dispatcher;
 import br.com.agenciacodeplus.socialcron.events.Event;
 import br.com.agenciacodeplus.socialcron.events.EventsService;
 import br.com.agenciacodeplus.socialcron.events.EventsValidator;
 import br.com.agenciacodeplus.socialcron.helpers.HttpHeadersHelper;
 import br.com.agenciacodeplus.socialcron.schedules.Schedule;
 import br.com.agenciacodeplus.socialcron.schedules.SchedulesService;
-
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -36,7 +35,7 @@ public class EventsController {
   
   private EventsService service;
   
-  private SchedulesService postService;
+  private SchedulesService schedulesService;
   
   @Autowired
   private EventsValidator eventsValidator;
@@ -47,7 +46,7 @@ public class EventsController {
   @Autowired
   public EventsController(EventsService service, SchedulesService postService) {
     this.service = service;
-    this.postService = postService;
+    this.schedulesService = postService;
   }
   
   @InitBinder("event")
@@ -61,7 +60,8 @@ public class EventsController {
                                                               Event event, 
                                                               Errors errors,
                                                               Authentication authentication,
-                                                              HttpHeadersHelper httpHeadersHelper) {
+                                                              HttpHeadersHelper httpHeadersHelper,
+                                                              Dispatcher dispatcher) {
     
     if(errors.hasErrors()) {
       return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -81,9 +81,10 @@ public class EventsController {
     permissions.add(authentication, event);
     headers = httpHeadersHelper.addLocationHeader("/v1/events", event.getId());
     
-    List<Schedule> posts = event.generatePosts();
-    postService.save(posts);
-    permissions.add(authentication, posts);
+    List<Schedule> schedules = event.generatePosts();
+    schedulesService.save(schedules);
+    permissions.add(authentication, schedules);
+    
     
     return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     

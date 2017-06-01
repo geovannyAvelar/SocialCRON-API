@@ -7,12 +7,13 @@
 
 	<groupId>br.com.agenciacodeplus</groupId>
 	<artifactId>socialcron</artifactId>
-	<version>2.11.36</version>
+	<version>2.12.36</version>
 	<packaging>war</packaging>
 
 	<name>SocialCRON-API</name>
 	<description>
-	   SocialCRON platform RESTFul API. SocialCRON is a open-source platform to schedule post on social media sites
+	   SocialCRON platform RESTFul API. SocialCRON is a open-source platform to schedule post 
+	   on social media sites
 	</description>
 
 	<parent>
@@ -79,7 +80,12 @@
 		  <artifactId>facebook4j-core</artifactId>
 		  <version>[2.4,)</version>
 		</dependency>
-
+		
+		<dependency>
+		  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpclient</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
