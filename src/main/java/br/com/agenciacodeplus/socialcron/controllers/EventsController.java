@@ -8,6 +8,8 @@ import br.com.agenciacodeplus.socialcron.events.EventsValidator;
 import br.com.agenciacodeplus.socialcron.helpers.HttpHeadersHelper;
 import br.com.agenciacodeplus.socialcron.schedules.Schedule;
 import br.com.agenciacodeplus.socialcron.schedules.SchedulesService;
+
+import java.io.IOException;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +63,8 @@ public class EventsController {
                                                               Errors errors,
                                                               Authentication authentication,
                                                               HttpHeadersHelper httpHeadersHelper,
-                                                              Dispatcher dispatcher) {
+                                                              Dispatcher dispatcher) 
+                                                                                throws IOException {
     
     if(errors.hasErrors()) {
       return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -84,7 +87,7 @@ public class EventsController {
     List<Schedule> schedules = event.generatePosts();
     schedulesService.save(schedules);
     permissions.add(authentication, schedules);
-    
+    dispatcher.sync(schedules);
     
     return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     
