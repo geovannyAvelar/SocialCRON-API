@@ -56,6 +56,19 @@ public class EventsController {
     binder.addValidators(eventsValidator);
   }
   
+  /**
+   * Endpoint to save an event and create the schedules
+   * @param event An br.com.agenciacodeplus.socialcron.events.Event object
+   * @param errors A org.springframework.validation.Errors object to validate Event object
+   * @param authentication org.springframework.security.core.Authentication object to retrieve user 
+   * to ACL operations
+   * @param httpHeadersHelper br.com.agenciacodeplus.socialcron.helpers.HttpHeadersHelper to add 
+   * location header
+   * @param dispatcher br.com.agenciacodeplus.socialcron.dispatcher.Dispatcher object to synchronize
+   * with SocialCRON dispatcher when necessary
+   * @return A ResponseEntity<Void> object with status code of operation
+   * @throws IOException An IOException if dispatcher call fails
+   */
   @CrossOrigin
   @PostMapping
   public @ResponseBody ResponseEntity<Void> save(@Valid @RequestBody 
@@ -93,6 +106,11 @@ public class EventsController {
     
   }
   
+  /**
+   * Retrieve an event by id
+   * @param id Event id
+   * @return ResponseEntity<Event> with event JSON on body and status code
+   */
   @CrossOrigin
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
   @PreAuthorize(
@@ -107,6 +125,10 @@ public class EventsController {
     return new ResponseEntity<Event>(event, HttpStatus.OK);
   }
   
+  /**
+   * Retrieve all events
+   * @return A list with all events
+   */
   @CrossOrigin
   @RequestMapping(value = "/all", method = RequestMethod.GET)
   @PostFilter("hasPermission(filterObject, 'read')")
@@ -114,6 +136,11 @@ public class EventsController {
     return service.findAll();
   }
   
+  /**
+   * Delete an event
+   * @param id ID of event to be deleted
+   * @return A ResponseEntity<Void> with status code
+   */
   @CrossOrigin
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
   @PreAuthorize("hasPermission(#id, 'br.com.agenciacodeplus.socialcron.events.Event', 'delete')")

@@ -26,6 +26,11 @@ public class UsersController {
     this.service = service;
   }
  
+  /**
+   * Return data about current user
+   * @param principal java.security.Principal with user data
+   * @return ResponseEntity<User> with user
+   */
   @CrossOrigin
   @RequestMapping(method = RequestMethod.GET)
   @PreAuthorize("isAuthenticated()")

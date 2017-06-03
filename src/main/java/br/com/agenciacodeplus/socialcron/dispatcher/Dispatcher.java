@@ -1,17 +1,21 @@
 package br.com.agenciacodeplus.socialcron.dispatcher;
 
-import br.com.agenciacodeplus.socialcron.schedules.Schedule;
-import br.com.agenciacodeplus.socialcron.utils.DateUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.com.agenciacodeplus.socialcron.schedules.Schedule;
+import br.com.agenciacodeplus.socialcron.utils.DateUtils;
 
 @Component
 public class Dispatcher {
@@ -28,8 +32,12 @@ public class Dispatcher {
   }
   
   public void sync(List<Schedule> schedules) throws IOException {
-    for(Schedule schedule : schedules) {
-      sync(schedule);
+    
+    
+    Iterator<Schedule> i = schedules.iterator();
+    
+    while(i.hasNext()) {
+      sync(i.next());
     }
   }
   
@@ -40,6 +48,7 @@ public class Dispatcher {
     request.addHeader("content-type", "application/json");
     request.setEntity(params);
     httpClient.execute(request);
+    httpClient.close();
   }
   
 }

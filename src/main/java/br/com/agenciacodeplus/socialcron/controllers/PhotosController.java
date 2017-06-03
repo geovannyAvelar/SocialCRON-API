@@ -42,6 +42,17 @@ public class PhotosController {
     this.postsService = postsService;
   }
   
+  /**
+   * Save a photo and bind it to a post
+   * @param id ID of post
+   * @param file A org.springframework.web.multipart.MultipartFile, with uploaded image
+   * @param authentication org.springframework.security.core.Authentication object to retrieve user 
+   * to ACL operations
+   * @return ResponseEntity<Void> with status code
+   * @throws EmptyFileException Throw this exception in case of a empty upload
+   * @throws IOException Throw this exception when isn't possible to save an image file
+   * @throws URISyntaxException If path to save is invalid
+   */
   @CrossOrigin
   @PostMapping
   @PreAuthorize("hasPermission(#id, 'br.com.agenciacodeplus.socialcron.posts.Post', 'write')")
@@ -72,6 +83,12 @@ public class PhotosController {
     
   }
   
+  /**
+   * Retrieve the photo data
+   * @param id ID of photo
+   * @return ResponseEntity<Photo> with photo info JSON and status code
+   * @throws IOException Throw this exception when isn't possible to retrieve an image file
+   */
   @CrossOrigin
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
   @PreAuthorize(
@@ -87,10 +104,16 @@ public class PhotosController {
     
   }
   
+  /**
+   * Return all the photos of a post
+   * @param id ID of post
+   * @return  ResponseEntity<List<Photo>> with a list of photo info JSON and status code
+   * @throws IOException Throw this exception when isn't possible to retrieve an image file
+   */
   @CrossOrigin
   @RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
-  @PreAuthorize(
-            "hasPermission(#id, 'br.com.agenciacodeplus.socialcron.posts.Post', 'read')")
+  @PreAuthorize("hasAuthority('ADMIN') or "
+              + "hasPermission(#id, 'br.com.agenciacodeplus.socialcron.posts.Post', 'read')")
   public ResponseEntity<List<Photo>> findAll(@PathVariable Long id) throws IOException {
     Post post = postsService.findOne(id);
     

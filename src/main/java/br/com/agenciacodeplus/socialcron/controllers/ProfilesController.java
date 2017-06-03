@@ -42,6 +42,18 @@ public class ProfilesController {
     this.service = service;
   }
   
+  /**
+   * Save a profile
+   * @param profile A br.com.agenciacodeplus.socialcron.profiles.Profile object
+   * @param errors A org.springframework.validation.Errors object to validate Profile object
+   * @param authentication rg.springframework.security.core.Authentication object to retrieve user 
+   * to ACL operations
+   * @param httpHeadersHelper br.com.agenciacodeplus.socialcron.helpers.HttpHeadersHelper to add 
+   * location header
+   * @param fbTokenHandler br.com.agenciacodeplus.socialcron.facebook.FacebookTokenHandler to 
+   * generate objects
+   * @return ResponseEntity<Void> object with status code of operation
+   */
   @CrossOrigin
   @PostMapping
   public @ResponseBody ResponseEntity<Void> save(@Valid @RequestBody 
@@ -81,6 +93,11 @@ public class ProfilesController {
     
   }
   
+  /**
+   * Retrieve a profile by id
+   * @param id Profile ID
+   * @return ResponseEntity<Post> with profile JSON on body and status code
+   */
   @CrossOrigin
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
   @PreAuthorize(
@@ -95,6 +112,10 @@ public class ProfilesController {
     return new ResponseEntity<Profile>(profile, HttpStatus.OK);
   }
   
+  /**
+   * Retrieve all profiles
+   * @return A list with all profiles
+   */
   @CrossOrigin
   @RequestMapping(value = "/all", method = RequestMethod.GET)
   @PostFilter("hasPermission(filterObject, 'read')")
@@ -102,6 +123,11 @@ public class ProfilesController {
     return service.findAll();
   }
   
+  /**
+   * Delete a profile
+   * @param id ID of profile to be deleted
+   * @return A ResponseEntity<Void> with status code
+   */
   @CrossOrigin
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
   @PreAuthorize(

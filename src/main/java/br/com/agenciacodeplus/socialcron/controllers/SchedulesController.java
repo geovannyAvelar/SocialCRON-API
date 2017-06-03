@@ -45,6 +45,11 @@ public class SchedulesController {
     this.schedulesService = schedulesService;
   }
   
+  /**
+   * Retrieve a schedule by id
+   * @param id Schedule ID
+   * @return ResponseEntity<Schedule> with schedule JSON on body and status code
+   */
   @CrossOrigin
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
   @PreAuthorize(
@@ -60,6 +65,11 @@ public class SchedulesController {
     
   }
   
+  /**
+   * Mark a schedule as completed
+   * @param id Id of schedule
+   * @return ResponseEntity<Void> object with status code of operation
+   */
   @CrossOrigin
   @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
   @PostFilter("hasAuthority('ADMIN') or "
@@ -78,6 +88,11 @@ public class SchedulesController {
     
   }
   
+  /**
+   * Search all schedules of a specific day
+   * @param day A day to serach
+   * @return A list with all profiles
+   */
   @CrossOrigin
   @RequestMapping(value = "/day/{day}", method = RequestMethod.GET)
   @PostFilter("hasAuthority('ADMIN') or hasPermission(filterObject, 'read')")
@@ -86,6 +101,12 @@ public class SchedulesController {
     return service.findByDay(day);
   }
   
+  /**
+   * Search all schedules on a date range
+   * @param from Initial date in range
+   * @param to Final date in range 
+   * @return A list with schedules
+   */
   @CrossOrigin
   @RequestMapping(value = "/range/{from}/{to}", method = RequestMethod.GET)
   @PostFilter("hasAuthority('ADMIN') or hasPermission(filterObject, 'read')")
@@ -143,6 +164,12 @@ public class SchedulesController {
     return schedule;
   }
   
+  /**
+   * Find all schedules by post
+   * @param id Post ID
+   * @return A list with schedules
+   * @throws ResourceNotFoundException throw this exception when resource isn't found
+   */
   @CrossOrigin
   @RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
   @PostFilter("hasPermission(#id, 'br.com.agenciacodeplus.socialcron.posts.Post', 'read')"
@@ -158,6 +185,12 @@ public class SchedulesController {
     return service.findByPost(post);
   }
   
+  /**
+   * Find all schedules by event
+   * @param id Post ID
+   * @return A list with schedules
+   * @throws ResourceNotFoundException throw this exception when resource isn't found
+   */
   @CrossOrigin
   @RequestMapping(value = "/event/{id}", method = RequestMethod.GET)
   @PostFilter("hasPermission(#id, 'br.com.agenciacodeplus.socialcron.events.Event', 'read')"
@@ -173,6 +206,10 @@ public class SchedulesController {
     return service.findByEvent(event);
   }
   
+  /**
+   * Return all schedules
+   * @return A list of schedules
+   */
   @CrossOrigin
   @RequestMapping(value = "/all", method = RequestMethod.GET)
   @PostFilter("hasAuthority('ADMIN') or hasPermission(filterObject, 'read')")

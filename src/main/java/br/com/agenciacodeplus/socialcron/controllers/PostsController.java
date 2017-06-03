@@ -38,6 +38,16 @@ public class PostsController {
     this.service = service;
   }
   
+  /**
+   * Save a post object
+   * @param post A br.com.agenciacodeplus.socialcron.posts.Post object
+   * @param errors A org.springframework.validation.Errors object to validate Post object
+   * @param authentication org.springframework.security.core.Authentication object to retrieve user 
+   * to ACL operations
+   * @param httpHeadersHelper br.com.agenciacodeplus.socialcron.helpers.HttpHeadersHelper to add 
+   * location header
+   * @return ResponseEntity<Void> object with status code of operation
+   */
   @CrossOrigin
   @PostMapping
   public @ResponseBody ResponseEntity<Void> save(@Valid @RequestBody 
@@ -66,6 +76,12 @@ public class PostsController {
     
   }
   
+  /**
+   * Enpoint to edit a post
+   * @param post br.com.agenciacodeplus.socialcron.posts.Post Object with an ID
+   * @param errors A org.springframework.validation.Errors object to validate Post object
+   * @return ResponseEntity<Void> object with status code of operation
+   */
   @CrossOrigin
   @PutMapping
   @PreAuthorize(
@@ -85,6 +101,11 @@ public class PostsController {
     
   }
   
+  /**
+   * Retrieve a post by id
+   * @param id Post ID
+   * @return ResponseEntity<Post> with post JSON on body and status code
+   */
   @CrossOrigin
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
   @PreAuthorize("hasPermission(#id, 'br.com.agenciacodeplus.socialcron.posts.Post', 'read')")
@@ -99,6 +120,10 @@ public class PostsController {
     
   }
   
+  /**
+   * Retrieve all posts
+   * @return A list with all posts
+   */
   @CrossOrigin
   @RequestMapping(value = "/all", method = RequestMethod.GET)
   @PostFilter("hasPermission(filterObject, 'read')")
@@ -106,6 +131,11 @@ public class PostsController {
     return service.findAll();
   }
   
+  /**
+   * Delete a post
+   * @param id ID of post to be deleted
+   * @return A ResponseEntity<Void> with status code
+   */
   @CrossOrigin
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
   @PreAuthorize("hasPermission(#id, 'br.com.agenciacodeplus.socialcron.posts.Post', 'delete')")
