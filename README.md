@@ -1,4 +1,4 @@
-# SocialCRON-API
+# SocialCRON-API [DEPRECATED SINCE 4th July 2017]
 [![Build Status](https://travis-ci.org/geovannyAvelar/SocialCRON-API.svg?branch=master)](https://travis-ci.org/geovannyAvelar/SocialCRON-API) [![Issue Count](https://codeclimate.com/github/geovannyAvelar/SocialCRON-CORE/badges/issue_count.svg)](https://codeclimate.com/github/geovannyAvelar/SocialCRON-CORE) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
 SocialCRON platform RESTFul API. SocialCRON is an open-source platform to schedule posts on social media sites
